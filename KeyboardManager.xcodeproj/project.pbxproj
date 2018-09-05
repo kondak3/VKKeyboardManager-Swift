@@ -14,7 +14,7 @@
 		9D02D96F213D36230098519C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D02D96D213D36230098519C /* LaunchScreen.storyboard */; };
 		9D02D97A213D36230098519C /* KeyboardManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02D979213D36230098519C /* KeyboardManagerTests.swift */; };
 		9D02D985213D36230098519C /* KeyboardManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02D984213D36230098519C /* KeyboardManagerUITests.swift */; };
-		9D02D995213D36DD0098519C /* VKKeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D02D994213D36DD0098519C /* VKKeyboardManager.swift */; };
+		9D65C2A2213FDE8200825CB0 /* VKKeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D65C2A1213FDE8200825CB0 /* VKKeyboardManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +48,7 @@
 		9D02D980213D36230098519C /* KeyboardManagerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KeyboardManagerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D02D984213D36230098519C /* KeyboardManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManagerUITests.swift; sourceTree = "<group>"; };
 		9D02D986213D36230098519C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9D02D994213D36DD0098519C /* VKKeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKKeyboardManager.swift; sourceTree = "<group>"; };
+		9D65C2A1213FDE8200825CB0 /* VKKeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VKKeyboardManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +101,7 @@
 			children = (
 				9D02D964213D361B0098519C /* AppDelegate.swift */,
 				9D02D966213D361B0098519C /* ViewController.swift */,
-				9D02D994213D36DD0098519C /* VKKeyboardManager.swift */,
+				9D65C2A0213FDE8200825CB0 /* VKKeyboardManager */,
 				9D02D968213D361B0098519C /* Main.storyboard */,
 				9D02D96B213D36230098519C /* Assets.xcassets */,
 				9D02D96D213D36230098519C /* LaunchScreen.storyboard */,
@@ -126,6 +126,14 @@
 				9D02D986213D36230098519C /* Info.plist */,
 			);
 			path = KeyboardManagerUITests;
+			sourceTree = "<group>";
+		};
+		9D65C2A0213FDE8200825CB0 /* VKKeyboardManager */ = {
+			isa = PBXGroup;
+			children = (
+				9D65C2A1213FDE8200825CB0 /* VKKeyboardManager.swift */,
+			);
+			path = VKKeyboardManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,7 +267,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9D02D995213D36DD0098519C /* VKKeyboardManager.swift in Sources */,
+				9D65C2A2213FDE8200825CB0 /* VKKeyboardManager.swift in Sources */,
 				9D02D967213D361B0098519C /* ViewController.swift in Sources */,
 				9D02D965213D361B0098519C /* AppDelegate.swift in Sources */,
 			);
@@ -367,7 +375,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -421,7 +429,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -437,6 +445,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = KeyboardManager/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,6 +465,7 @@
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = KeyboardManager/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
