@@ -10,7 +10,7 @@ Swift 3 or higher
 ## Usage:
 - Drag and drop "VKKeyboardManager" folder into your resource
 
-// add this code in "AppDelegate.swift" didFinishLaunchingWithOptions method...
+// add this code in "AppDelegate.swift" didFinishLaunchingWithOptions funaction...
 
 VKKeyboardManager.shared.setEnable()
 
