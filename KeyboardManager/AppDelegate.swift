@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         VKKeyboardManager.shared.setEnable()
-        VKKeyboardManager.shared.keyboard_gap = 10.0// optional
+        VKKeyboardManager.shared.keyboard_gap = 5.0// optional
         
         return true
     }
