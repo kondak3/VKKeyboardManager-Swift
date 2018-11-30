@@ -15,3 +15,14 @@
 VKKeyboardManager.shared.setEnable()
 VKKeyboardManager.shared.keyboard_gap = 5.0 // default vaule 5.0 and max 100.0
 ```
+
+```
+// if any screen you don't want this disable this
+VKKeyboardManager.shared.setDisable()
+```
+
+```
+// move to back or next again enable this
+VKKeyboardManager.shared.setEnable()
+
+```
