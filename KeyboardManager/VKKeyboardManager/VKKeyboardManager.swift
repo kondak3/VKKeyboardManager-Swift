@@ -12,25 +12,21 @@ class VKKeyboardManager: NSObject {
 
     // instance...
     static let shared = VKKeyboardManager()
-    
     // default gap between keyboard and textfiled/textview...
     var keyboard_gap: Float = 5.0
+	// initialize...
     private var _initialize: Bool = false
-    
+	// placeholder message lable...
+	private var _placeholder: UILabel?
+	// toolbar...
+	private var _toolBar: UIToolbar?
     // textfiled for assign..
     private var _textField: UITextField?
-    
     // textview for assign..
     private var _textView: UITextView?
-    
-    // toolbar...
-    private var _toolBar: UIToolbar?
-    
-    // placeholder message lable...
-    private var _placeholder: UILabel?
-    
-    // done button for keyboard resign...
-    private var _doneBtn: UIButton?
+	// disable...
+	private var _disable: Bool = false
+
     
     // MARK:-
     // enable keyboard manager...
@@ -40,6 +36,7 @@ class VKKeyboardManager: NSObject {
         if keyboard_gap == 0.0 {
             keyboard_gap = 5.0
         }
+		_disable = false
         
         // add element only once...
         if (!_initialize) {
@@ -49,60 +46,91 @@ class VKKeyboardManager: NSObject {
             add_observers()
         }
     }
-    
+	
+	// disable keyboard manager...
+	func setDisable() -> Void {
+		_disable = true
+	}
+	
     private func create_toolbar() -> Void {
-        
-        // parent view creations...
-        let parent_view = UIView.init()
-        parent_view.frame = CGRect.init(x: 0, y: 0, width: Int(UIScreen.main.bounds.size.width - 40), height: tool_height)
-        parent_view.backgroundColor = UIColor.clear
-        
+		
         // done buttons...
-        _doneBtn = UIButton.init(type: .custom)
-        _doneBtn?.frame = CGRect.init(x: Int(UIScreen.main.bounds.size.width - 50), y: 0, width: 50, height: tool_height)
-        _doneBtn?.backgroundColor = UIColor.clear
-        _doneBtn?.setTitle("Done", for: .normal)
-        _doneBtn?.setTitleColor(UIColor.init(red: 30.0/255.0, green: 150.0/255.0, blue: 255.0/255.0, alpha: 1.0), for: .normal)
-        _doneBtn?.titleLabel?.font = UIFont.systemFont(ofSize: 15)
-        _doneBtn?.addTarget(self, action: #selector(dismissKeyboardMethod), for: .touchUpInside)
-        parent_view.addSubview(_doneBtn!)
-        
+        let _doneBtn = UIButton.init(type: .custom)
+		_doneBtn.frame = CGRect.init(x: 0, y: 0, width: 50, height: tool_height)
+        _doneBtn.backgroundColor = UIColor.clear
+        _doneBtn.setTitle("Done", for: .normal)
+        _doneBtn.setTitleColor(UIColor.init(red: 30.0/255.0, green: 150.0/255.0, blue: 255.0/255.0, alpha: 1.0), for: .normal)
+        _doneBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        _doneBtn.addTarget(self, action: #selector(dismissKeyboardMethod), for: .touchUpInside)
+		
+		// empty view...
+		let _emptyView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 50, height: tool_height))
+		_emptyView.backgroundColor = UIColor.clear
+		
         // place holder label...
         _placeholder = UILabel.init()
-        _placeholder?.frame = CGRect.init(x: 115/2, y: 0, width: Int(parent_view.frame.size.width - 115), height: tool_height)
+        _placeholder?.frame = CGRect.init(x: 0, y: 0, width: 180, height: tool_height)
         _placeholder?.textColor = UIColor.gray
         _placeholder?.textAlignment = .center
         _placeholder?.numberOfLines = 2
         _placeholder?.minimumScaleFactor = 8
         _placeholder?.font = UIFont.systemFont(ofSize: 12)
         _placeholder?.backgroundColor = UIColor.clear
-        parent_view.addSubview(_placeholder!)
-        
+
+		
         // tool bar allocations...
-        let button_items = UIBarButtonItem.init(customView: parent_view)
+		let space_area = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
         _toolBar = UIToolbar.init(frame: CGRect.init(x: 0, y: 0, width: 320, height: 50))
-        _toolBar?.items = [button_items]
+        _toolBar?.items = [UIBarButtonItem.init(customView: _emptyView), space_area,
+						   UIBarButtonItem.init(customView: _placeholder!), space_area,
+						   UIBarButtonItem.init(customView: _doneBtn)]
         _toolBar?.sizeToFit()
     }
     
     private func add_toolbar() -> Void {
         
-        // tool bar width....
-        let final_width = UIScreen.main.bounds.size.width - 40
-        _doneBtn?.frame = CGRect.init(x: Int(final_width - 50), y: 0, width: 50, height: tool_height)
-        _placeholder?.frame = CGRect.init(x: 115/2, y: 0, width: Int(final_width - 115), height: tool_height)
-        
+        // keyboard disable...
+		if _disable == true {
+			return
+		}
+		frame_adjustment()
+		
         // assign tool bar to textfiled/textview...
         if _textField != nil {
+			
             _placeholder?.text = _textField?.placeholder
             _textField?.inputAccessoryView = _toolBar
         }
         else if _textView != nil {
+			
             _placeholder?.text = ""
             _textView?.inputAccessoryView = _toolBar
         }
         else {}
     }
+	
+	private func frame_adjustment () {
+		
+		if _placeholder != nil {
+			
+			// orientation checking...
+			let interfaceOrientation = UIApplication.shared.statusBarOrientation
+			if UIInterfaceOrientationIsPortrait(interfaceOrientation) {
+				_placeholder?.frame = CGRect.init(x: 0, y: 0, width: (Int(UIScreen.main.bounds.size.width - 150)), height: tool_height)
+			} else {
+				_placeholder?.frame = CGRect.init(x: 0, y: 0, width: (Int(UIScreen.main.bounds.size.width - 280)), height: tool_height)
+			}
+			
+			// adjustment menu...
+			if _toolBar?.items?.count ?? 0 >= 3 {
+				
+				var items_array = _toolBar?.items
+				items_array?[2] = UIBarButtonItem.init(customView: _placeholder!)
+				_toolBar?.items = items_array
+				_toolBar?.sizeToFit()
+			}
+		}
+	}
     
     // dealloc method in swift...
     deinit {
@@ -128,6 +156,9 @@ class VKKeyboardManager: NSObject {
         NotificationCenter.default.removeObserver(self,
                                                   name: .UIKeyboardWillHide,
                                                   object: nil)
+		NotificationCenter.default.removeObserver(self,
+												  name: .UIDeviceOrientationDidChange,
+												  object: nil)
     }
 }
 
@@ -195,6 +226,12 @@ extension VKKeyboardManager {
                                                selector: #selector(keyboardWillHide(notification:)),
                                                name: .UIKeyboardWillHide,
                                                object: nil)
+		
+		// orientation notifications...
+		NotificationCenter.default.addObserver(self,
+											   selector: #selector(deviceOrientationDidChange(notification:)),
+											   name: .UIDeviceOrientationDidChange,
+											   object: nil)
     }
 }
 
@@ -202,7 +239,12 @@ extension VKKeyboardManager {
     
     // MARK:-
     @objc private func keyboardWillShow(notification: Notification) -> Void {
-        
+		
+		// keyboard disable...
+		if _disable == true {
+			return
+		}
+		
         // getting textfield y-axis...
         let window = UIApplication.shared.keyWindow
         let fieldRect: CGRect!
@@ -260,7 +302,12 @@ extension VKKeyboardManager {
     }
     
     @objc private func keyboardWillHide(notification: Notification) -> Void {
-        
+		
+		// keyboard disable...
+		if _disable == true {
+			return
+		}
+		
         // if we didn't get view controller...
         let viewCtrl: UIViewController? = getController()
         if viewCtrl == nil {
@@ -287,6 +334,10 @@ extension VKKeyboardManager {
         }
         else {}
     }
+	
+	@objc private func deviceOrientationDidChange(notification: Notification) -> Void {
+		dismissKeyboardMethod()
+	}
 }
 
 extension VKKeyboardManager {
@@ -328,7 +379,7 @@ extension VKKeyboardManager {
 }
 
 // tool bar menu default height...
-let tool_height = 35
+let tool_height = 40
 
 
 
